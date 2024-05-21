@@ -1,0 +1,466 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:5000/api/v1",
+      "description": "local server"
+    }
+  ],
+  "paths": {
+    "/auth/login": {
+      "post": {
+        "tags": ["default"],
+        "summary": "login",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "example": {
+                  "email": "md.israfil1014@gmail.com",
+                  "password": "digigrow"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      }
+    },
+    "/auth/profile": {
+      "get": {
+        "tags": ["default"],
+        "summary": "get profile",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      }
+    },
+    "/foods/create-food": {
+      "post": {
+        "tags": ["default"],
+        "summary": "CreateFood",
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "data": {
+                    "type": "string",
+                    "example": "{\n  \"foodName\": \"Food Name\",\n  \"storeId\": \"65c2b09b0546d4998ffa4daf\",\n  \"image\": \"image.jpg\",\n  \"price\": 10.99,\n  \"regularPrice\": 12.99,\n  \"offer\": true,\n  \"offerPercentage\": 10,\n  \"offerPrice\": 11.69,\n  \"category\": \"Category\",\n  \"video\": \"video.mp4\",\n  \"nutrition\": \"Nutrition information\",\n  \"is_recommended\": true,\n  \"is_quickMenu\": false\n}"
+                  },
+                  "image": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {}
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": "Unauthorized",
+                  "message": "Credentials not provided"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/foods": {
+      "get": {
+        "tags": ["default"],
+        "summary": "Get foods",
+        "parameters": [
+          {
+            "name": "storeId",
+            "in": "query",
+            "description": "ID of the store",
+            "required": false,
+            "schema": {
+              "type": "ObjectId"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {}
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": "Unauthorized",
+                  "message": "Credentials not provided"
+                }
+              }
+            }
+          }
+        }
+      },
+      "components": {
+        "securitySchemes": {
+          "cookieAuth": {
+            "type": "apiKey",
+            "name": "Cookie",
+            "in": "cookie",
+            "description": "Enter your authentication cookie",
+            "credential": "include"
+          }
+        }
+      }
+    },
+    "/foods/{foodId}": {
+      "put": {
+        "tags": ["default"],
+        "summary": "update food",
+        "parameters": [
+          {
+            "name": "foodId",
+            "in": "path",
+            "description": "ID of the food",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "foodName": {
+                    "foodName": "Cheese Burder"
+                  }
+                }
+              }
+            },
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "data": {
+                    "type": "string",
+                    "example": "{\n    \"foodName\":\"israfil\"\n}"
+                  },
+                  "image": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {}
+            }
+          }
+        },
+
+        "401": {
+          "description": "Unauthorized",
+          "content": {
+            "application/json": {
+              "example": {
+                "error": "Unauthorized",
+                "message": "Credentials not provided"
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "APIKeyHeader": []
+          }
+        ]
+      },
+      "components": {
+        "securitySchemes": {
+          "cookieAuth": {
+            "type": "apiKey",
+            "name": "Cookie",
+            "in": "cookie",
+            "description": "Enter your authentication cookie",
+            "credential": "include"
+          }
+        }
+      }
+    },
+    "/outlets/create-outlet": {
+      "post": {
+        "tags": ["default"],
+        "summary": "Create Outlet",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "example": {
+                  "name": "dhanmondi-shakha",
+                  "store": "65c2b09b0546d4998ffa4daf",
+                  "storeId": "RLIOAT-AHNEDHJ-6008",
+                  "admin": "65c2b22473a55b9760234892"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      }
+    },
+    "/outlets/create-table/{storeId}/{outletId}": {
+      "put": {
+        "tags": ["default"],
+        "summary": "create Table",
+        "parameters": [
+          {
+            "name": "storeId",
+            "in": "path",
+            "description": "_id of the store ",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "outletId",
+            "in": "path",
+            "description": "_id of the outlet",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "example": {
+                  "tableNumber": "table-01"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      }
+    },
+    "/outlets/delete-table/{outletId}/table-01": {
+      "delete": {
+        "tags": ["default"],
+        "summary": "delete Table",
+        "parameters": [
+          {
+            "name": "outletId",
+            "in": "path",
+            "description": "_id of the outlet",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      }
+    },
+    "/outlets/delete-outlet/65c2c281a4a93d47c2662669": {
+      "delete": {
+        "tags": ["default"],
+        "summary": "delete outlet",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      }
+    },
+    "/stores/create-store": {
+      "post": {
+        "tags": ["default"],
+        "summary": "Create Store",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "example": {
+                  "storeName": "RAJDHANI-HOTEL"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      }
+    },
+    "/stores/update-store/MTERATRRNILEEOUSNS-6695": {
+      "put": {
+        "tags": ["default"],
+        "summary": "update Store",
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "data": {
+                    "type": "string",
+                    "example": "{\"name\":\"mosa\"}"
+                  },
+                  "banner": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      }
+    },
+    "/users/create-store-admin": {
+      "post": {
+        "tags": ["default"],
+        "summary": "create Store Admin",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "example": {
+                  "password": "",
+                  "admin": {
+                    "name": "israfil",
+                    "email": "webdevisrafil@gmail.com",
+                    "contactNo": "0184093",
+                    "store": "65c2b09b0546d4998ffa4daf",
+                    "storeId": "RLIOAT-AHNEDHJ-6008"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      }
+    },
+    "/users/create-super-admin": {
+      "post": {
+        "tags": ["default"],
+        "summary": "Create SuperAdmin",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "example": {
+                  "password": "digigrow",
+                  "data": {
+                    "name": "israfil",
+                    "email": "md.israfil1014@gmail.com",
+                    "contactNo": "0184093"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      }
+    }
+  }
+}
