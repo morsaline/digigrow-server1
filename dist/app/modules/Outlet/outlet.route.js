@@ -1,0 +1,20 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.OutletRoutes = void 0;
+const express_1 = __importDefault(require("express"));
+const validateRequest_1 = __importDefault(require("../../middlewares/validateRequest"));
+const outlet_validation_1 = require("./outlet.validation");
+const outlet_controller_1 = require("./outlet.controller");
+const generateQrCode_1 = __importDefault(require("../../middlewares/generateQrCode"));
+const auth_1 = __importDefault(require("../../middlewares/auth"));
+const router = express_1.default.Router();
+router.post('/create-outlet', (0, validateRequest_1.default)(outlet_validation_1.OutletValidations.OutletValidationSchema), outlet_controller_1.outletControllers.createOutlet);
+router.put('/create-table/:storeId/:outletId', generateQrCode_1.default, outlet_controller_1.outletControllers.createTable);
+router.get('/', (0, auth_1.default)('store_admin', 'super_admin'), outlet_controller_1.outletControllers.getOutlets);
+router.get('/:id', (0, auth_1.default)('store_admin', 'super_admin'), outlet_controller_1.outletControllers.getSingleOutlet);
+router.delete('/delete-table/:outletId/:tableId', outlet_controller_1.outletControllers.deleteTable);
+router.delete('/delete-outlet/:outletId', outlet_controller_1.outletControllers.deleteOutlet);
+exports.OutletRoutes = router;

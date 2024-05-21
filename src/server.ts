@@ -12,6 +12,7 @@ import swaggerDocs from './app/utils/swagger';
 
 let server: Server;
 let io: SocketServer;
+// hello
 async function main() {
   try {
     await mongoose.connect(config.database_url as string);
