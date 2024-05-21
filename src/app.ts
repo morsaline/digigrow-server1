@@ -24,7 +24,7 @@ app.use(
       httpOnly: true,
       domain: config.client_url,
       expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), // 7 days
-      sameSite: false,
+      sameSite: 'none',
       path: '/',
     },
   }),
