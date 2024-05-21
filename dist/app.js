@@ -32,8 +32,9 @@ app.use((0, express_session_1.default)({
     cookie: {
         secure: false, // Set to true in a production environment with HTTPS
         httpOnly: true,
-        // domain:'hosted domain url',
+        domain: config_1.default.client_url,
         expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), // 7 days
+        sameSite: false,
         path: '/',
     },
 }));
