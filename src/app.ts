@@ -22,7 +22,7 @@ app.use(
     cookie: {
       secure: false, // Set to true in a production environment with HTTPS
       httpOnly: true,
-      // domain:'hosted domain url',
+      domain: config.client_url,
       expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), // 7 days
       path: '/',
     },
